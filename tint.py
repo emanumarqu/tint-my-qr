@@ -4,31 +4,33 @@ from os import listdir
 from os.path import join
 
 # Identify foreground & background pixels
-def get_fore_back(img):
+# def get_fore_back(pixels):
 
     # Store black pixels as foreground
     
     # Store remaining white pixels as background
 
     # return [f, b]
-    return [[1, 2], [3, 4, 5]]
-
+ 
 # Change pixels' colors
 def set_fore_back(pixels, color):
     print(str(len(pixels)) + ' pixels will be changed to ' + str(color))
+    for p in pixels:
+        print(p)
 
 # Process image
 def process_qr(q, f, b):
     im = Image.open(q, 'r')
     width, height = im.size
     pixel_values = list(im.getdata())
-    print(pixel_values)
-
-    # im_fb = get_fore_back(q)
+    
+    print(len(pixel_values))
+    fore_back = get_fore_back(pixel_values)
+    
     # if f != '':
-    #     set_fore_back(im_fb[0], f)
+    #     set_fore_back(fore_back[0], f)
     # if b != '':
-    #     set_fore_back(im_fb[1], b)
+    #     set_fore_back(fore_back[1], b)
 
 # Get QR codes
 input_dir = 'inputs/'
@@ -50,3 +52,7 @@ print('\n')
 # Process QR codes
 for qrcode in qr_codes:
     process_qr(qrcode, foreground, background)
+
+# Improvements
+# https://pillow.readthedocs.io/en/latest/reference/ImageFilter.html#PIL.ImageFilter.Filter
+# https://pillow.readthedocs.io/en/latest/reference/ImageChops.html#PIL.ImageChops.difference

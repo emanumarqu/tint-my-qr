@@ -20,16 +20,17 @@ def set_fore_back(pixels, color):
 # Create colorized copy of QR code
 def create_color_copy(q, f, b):
     im = Image.open(q, 'r')
-    new_im_pixels = []
-    for pixel in im.getdata():
-        if pixel == (0, 0, 0, 255):
-            new_im_pixels.append(f)
-        else:
-            new_im_pixels.append(b)
     
-    new_im = Image.new(im.mode, im.size)
-    new_im.putdata(new_im_pixels)
-    new_im.save('outputs/')
+    pixdata = im.load()
+    for y in range(im.size[1]):
+        for x in range(im.size[0]):
+            if pixdata[x, y] == (0, 0, 0, 255) or pixdata[x, y] == (0, 0, 1, 255):
+                pixdata[x, y] = f
+            else:
+                pixdata[x, y] = b
+
+    im.show()
+    # im.save('outputs/')
 
 # Get QR codes
 input_dir = 'inputs/'
@@ -41,8 +42,8 @@ print('Enter colors as RGBA tuples --> (0, 100, 255, 0.5)')
 # add code from other repo to convert hex values to rgba
 # and validates rgba input
 # 
-foreground = (30, 203, 225, 1)
-background = (225, 52, 30, 0.5)
+foreground = (30, 203, 225, 255)
+background = (225, 52, 30, 50)
 # foreground = input('Foreground color: ')
 # background = input('Background color: ')
 print('\n')

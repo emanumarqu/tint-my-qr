@@ -22,7 +22,9 @@ input_dir = 'inputs/'
 qr_codes = [input_dir + f for f in listdir(input_dir) if isfile(join(input_dir, f))]
 
 # Process QR codes
-foreground = '1ecbe1' # foreground = input('Foreground color: ')
-background = 'e1341e' # background = input('Background color: ')
+print('Enter colors as RGBA tuples like (0, 255, 100, 0.5)')
+# add code from other repo to convert hex values to rgba
+foreground = (30, 203, 225, 1) # foreground = input('Foreground color: ')
+background = (225, 52, 30, 0.5) # background = input('Background color: ')
 for qrcode in qr_codes:
     process_qr(qrcode, foreground, background)

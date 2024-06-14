@@ -11,19 +11,18 @@ def new_fore(color):
 def new_back(color):
     pass
 
-# Get images size
-def get_image(img):
-    img = 'inputs/' + img
-    im = Image.open(img, 'r')
+# Process image
+def process_qr(q, f, b):
+    im = Image.open(q, 'r')
     width, height = im.size
     pixel_values = list(im.getdata())
-    print(width)
-    print(height)
 
 # Get QR codes
-inputs = 'inputs/'
-qr_codes = [f for f in listdir(inputs) if isfile(join(inputs, f))]
+input_dir = 'inputs/'
+qr_codes = [input_dir + f for f in listdir(input_dir) if isfile(join(input_dir, f))]
 
-# Manipulate QR codes
-for q in qr_codes:
-    get_image(q)
+# Process QR codes
+foreground = '1ecbe1' # foreground = input('Foreground color: ')
+background = 'e1341e' # background = input('Background color: ')
+for qrcode in qr_codes:
+    process_qr(qrcode, foreground, background)

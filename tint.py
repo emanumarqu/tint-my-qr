@@ -10,26 +10,25 @@ from os.path import join
 
 # Create colorized copy of QR code
 def create_color_copy(q, f, b):
-    im = Image.open(q, 'r')
+    f = tuple(int(item) if item.isdigit()
+        else item for item in f.split(' '))
+    b = tuple(int(item) if item.isdigit()
+        else item for item in b.split(' '))
     
+    im = Image.open(q, 'r')
     pixdata = im.load()
     for y in range(im.size[1]):
         for x in range(im.size[0]):
-            if pixdata[x, y] == (0, 0, 0, 255) or pixdata[x, y] == (0, 0, 1, 255):
+            if pixdata[x, y] < (127, 127, 127, 127):
                 pixdata[x, y] = f
             else:
                 pixdata[x, y] = b
-    
     im.save('outputs/' + q[7:])
 
-
 # Get transformations
-print('Enter colors as RGBA tuples -> (R, G, B, A)')
-foreground = (30, 203, 225, 255)
-background = (225, 52, 30, 255)
-# foreground = input('Foreground color: ')
-# background = input('Background color: ')
-print('\n')
+print('Enter colors as RGBA values: R G B A')
+foreground = input('Foreground color: ')
+background = input('Background color: ')
 
 # Get QR codes
 input_dir = 'inputs/'

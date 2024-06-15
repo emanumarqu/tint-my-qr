@@ -3,26 +3,10 @@ from PIL import Image
 from os import listdir
 from os.path import join
 
-
 # Improvements
 # https://pillow.readthedocs.io/en/latest/reference/ImageFilter.html#PIL.ImageFilter.Filter
 # https://pillow.readthedocs.io/en/latest/reference/ImageChops.html#PIL.ImageChops.difference
-
-
-# Identify foreground & background pixels
-# def get_fore_back(pixels):
-
-    # Store black pixels as foreground
-    
-    # Store remaining white pixels as background
-
-    # return [f, b]
-
-
-# Change pixels' colors
-# def set_fore_back(pixels, color):
-#     print(str(len(pixels)) + ' pixels will be changed to ' + str(color))
-
+# add code from other repo to convert & validate hex/rgba inputs
 
 # Create colorized copy of QR code
 def create_color_copy(q, f, b):
@@ -35,24 +19,21 @@ def create_color_copy(q, f, b):
                 pixdata[x, y] = f
             else:
                 pixdata[x, y] = b
-    # im.save('outputs/')
+    
+    im.save('outputs/' + q[7:])
 
-
-# Get QR codes
-input_dir = 'inputs/'
-qr_codes = [input_dir + f for f in listdir(input_dir) if join(input_dir, f).endswith('.png')]
 
 # Get transformations
 print('Enter colors as RGBA tuples -> (R, G, B, A)')
-# 
-# add code from other repo to convert hex values to rgba
-# and validates rgba input
-# 
 foreground = (30, 203, 225, 255)
 background = (225, 52, 30, 255)
 # foreground = input('Foreground color: ')
 # background = input('Background color: ')
 print('\n')
+
+# Get QR codes
+input_dir = 'inputs/'
+qr_codes = [input_dir + f for f in listdir(input_dir) if join(input_dir, f).endswith('.png')]
 
 # Process QR codes
 for qrcode in qr_codes:

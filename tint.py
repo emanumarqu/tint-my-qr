@@ -8,8 +8,8 @@ from os.path import join
 # https://pillow.readthedocs.io/en/latest/reference/ImageChops.html#PIL.ImageChops.difference
 # add code from other repo to convert & validate hex/rgba inputs
 
-# Create colorized copy of QR code
-def create_color_copy(q, f, b):
+# Creates a colorized version of a QR code
+def colorize(q, f, b):
     f = tuple(int(item) if item.isdigit()
         else item for item in f.split(' '))
     b = tuple(int(item) if item.isdigit()
@@ -25,15 +25,18 @@ def create_color_copy(q, f, b):
                 pixdata[x, y] = b
     im.save('outputs/' + q[7:])
 
-# Get transformations
-print('Enter colors as RGBA values: R G B A')
-foreground = input('Foreground color: ')
-background = input('Background color: ')
-
 # Get QR codes
 input_dir = 'inputs/'
-qr_codes = [input_dir + f for f in listdir(input_dir) if join(input_dir, f).endswith('.png')]
+qrcodes = [input_dir + f for f in listdir(input_dir) if join(input_dir, f).endswith('.png')]
 
-# Process QR codes
-for qrcode in qr_codes:
-    create_color_copy(qrcode, foreground, background)
+# Get transformations
+print('Enter colors as RGBA values: R G B A')
+foreground = input('Foreground color (default = black): ')
+background = input('Background color (default = transparent): ')
+if foreground == '' or background == '':
+    foreground = '0 0 0 255'
+    background = '255 255 255 0'
+    
+# Create color versions of QR codes
+for qr in qrcodes:
+    colorize(qr, foreground, background)
